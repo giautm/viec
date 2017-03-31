@@ -1,0 +1,41 @@
+{
+  "name": "viec",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "jest-expo": "^0.3.0",
+    "react-native-scripts": "0.0.26",
+    "react-test-renderer": "~15.4.1"
+  },
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "scripts": {
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "test": "node node_modules/jest/bin/jest.js --watch"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "@expo/ex-navigation": "2.9.4",
+    "@expo/react-native-action-sheet": "0.3.1",
+    "@expo/react-native-touchable-native-feedback-safe": "1.1.1",
+    "@expo/vector-icons": "4.0.0",
+    "apollo-client": "1.0.0",
+    "expo": "^15.1.0",
+    "graphql-tag": "2.0.0",
+    "immutable": "3.8.1",
+    "jwt-decode": "2.2.0",
+    "lodash": "4.17.4",
+    "react": "~15.4.0",
+    "react-apollo": "1.0.0",
+    "react-native": "0.42.3",
+    "react-redux": "5.0.3",
+    "redux": "3.6.0",
+    "redux-actions": "2.0.1",
+    "redux-logger": "3.0.1",
+    "redux-promise": "0.5.3"
+  }
+}
