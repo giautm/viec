@@ -17,6 +17,11 @@ function getIdToken() {
   }
 }
 
+function setIdToken(idToken) {
+  let Store = require('../Flux/Store').default;
+  Store.dispatch(AuthTokenActions.updateIdToken(idToken));
+}
+
 function getRefreshToken() {
   let Store = require('../Flux/Store').default;
   let state = Store.getState();
@@ -25,11 +30,6 @@ function getRefreshToken() {
   } else {
     return null;
   }
-}
-
-function setIdToken(idToken) {
-  let Store = require('../Flux/Store').default;
-  Store.dispatch(AuthTokenActions.updateIdToken(idToken));
 }
 
 function idTokenIsValid() {

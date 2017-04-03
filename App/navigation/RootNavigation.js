@@ -45,7 +45,7 @@ export default class RootNavigation extends React.Component {
           <StackNavigation
             id="projects"
             navigatorUID="projects"
-            initialRoute="signIn"
+            initialRoute="employee"
             defaultRouteConfig={defaultRouteConfig}
           />
         </TabNavigationItem>
@@ -81,7 +81,7 @@ export default class RootNavigation extends React.Component {
           <StackNavigation
             id="profile"
             navigatorUID="profile"
-            initialRoute="signIn"
+            initialRoute="profile"
             defaultRouteConfig={defaultRouteConfig}
           />
         </TabNavigationItem>

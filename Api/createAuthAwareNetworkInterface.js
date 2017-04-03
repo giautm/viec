@@ -1,6 +1,6 @@
 /* @flow */
 
-import { createNetworkInterface } from 'apollo-client';
+import { createNetworkInterface, printAST } from 'apollo-client';
 import ConnectivityAwareHTTPNetworkInterface from './ConnectivityAwareHTTPNetworkInterface';
 
 type AuthAwareNetworkInterfaceOptions = {
@@ -10,6 +10,11 @@ type AuthAwareNetworkInterfaceOptions = {
   idTokenIsValid: () => bool,
   refreshIdTokenAsync: () => string,
 }
+
+const isFile = (value) => (
+  'uri' in value &&
+  'type' in value &&
+  'name' in value);
 
 class AuthAwareNetworkInterface {
   _requestQueue = [];
@@ -30,6 +35,7 @@ class AuthAwareNetworkInterface {
     this._refreshIdTokenAsync = options.refreshIdTokenAsync;
 
     this._applyAuthorizationHeaderMiddleware();
+    this._applyFileUploadMiddleware();
   }
 
   _applyAuthorizationHeaderMiddleware = () => {
@@ -42,6 +48,50 @@ class AuthAwareNetworkInterface {
         const idToken = this._getIdToken();
         if (idToken) {
           req.options.headers['Authorization'] = `Bearer ${idToken}`;
+        }
+
+        next();
+      }
+    }]);
+  }
+
+  _isUpload = (request) => {
+    const { variables } = request;
+    return Object.keys(variables).some((variableName) => {
+      const value = variables[variableName];
+      if (Array.isArray(value)) {
+        return value.every(isFile);
+      }
+      return isFile(value);
+    });
+  }
+
+  _applyFileUploadMiddleware = () => {
+    this._networkInterface.use([{
+      applyMiddleware: (req, next) => {
+        if (this._isUpload(req.request)) {
+          if (!req.options.headers) {
+            req.options.headers = {};
+          }
+
+          const body = new FormData();
+          const variables = {};
+
+          Object.keys(req.request.variables).forEach((variableName) => {
+            const value = req.request.variables[variableName];
+            if (isFile(value) || (Array.isArray(value) && value.every(isFile))) {
+              body.append(variableName, value);
+            } else {
+              variables[variableName] = value;
+            }
+          });
+
+          body.append('operationName', req.request.operationName);
+          body.append('query', printAST(req.request.query));
+          body.append('variables', JSON.stringify(variables));
+
+          req.options.body = body;
+          req.options.headers['Content-Type'] = 'mutipart/form-data';
         }
 
         next();
