@@ -76,7 +76,7 @@ export default class ModalScreen extends React.Component {
               <InfoRow icon="female" text="Nữ"/>
               <InfoRow icon="contact" text="0163 639 2248"/>
               <InfoRow icon="briefcase" text="Vận chuyển"/>
-              <InfoRow icon="cash" text="10,000,000"/>
+              <InfoRow icon="cash" text="100,000,000"/>
             </View>
           </View>
         </View>
