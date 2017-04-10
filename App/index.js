@@ -13,6 +13,13 @@ import { NavigationProvider, StackNavigation } from '@expo/ex-navigation';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import SentryClient from '@expo/sentry-utils';
+import packageJSON from './../package.json';
+
+SentryClient.setupSentry(
+  `https://a993a0483e434eaabad7e9763dd81254@sentry.io/156904`,
+  packageJSON.version,
+  packageJSON.main,
+);
 
 import AuthTokenActions from '../Flux/AuthTokenActions';
 import LocalStorage from '../Storage/LocalStorage';
@@ -30,16 +37,6 @@ import customNavigationContext from './navigation/customNavigationContext';
 
 import registerForPushNotificationsAsync from '../Api/registerForPushNotificationsAsync';
 
-import packageJSON from './../package.json';
-
-const SENTRY_API_KEY = 'a993a0483e434eaabad7e9763dd81254';
-const SENTRY_PROJECT = '156904';
-
-SentryClient.setupSentry(
-  `https://${SENTRY_API_KEY}@sentry.io/${SENTRY_PROJECT}`,
-  packageJSON.version,
-  packageJSON.main,
-);
 
 export default class WrapWithStore extends React.Component {
   render() {
@@ -57,7 +54,6 @@ export class AppContainer extends React.Component {
   };
 
   async componentDidMount() {
-    throw new Error('Test sentry by giau.tmg');
     try {
       let storedAuthTokens = await LocalStorage.getAuthTokensAsync();
       if (storedAuthTokens) {
@@ -83,6 +79,7 @@ export class AppContainer extends React.Component {
     } catch (e) {
     } finally {
       this.setState({ isReady: true });
+      throw new Error('Test sentry by giau.tmg');
     }
   }
 
