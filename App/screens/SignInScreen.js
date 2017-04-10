@@ -144,7 +144,6 @@ export default class SignInScreen extends React.Component {
       this._isMounted && this._handleError(e);
     } finally {
       this._isMounted && this.setState({ isLoading: false });
-      throw new Error('Test sentry by giau.tmg');
     }
   };
 

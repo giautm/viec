@@ -57,6 +57,7 @@ export class AppContainer extends React.Component {
   };
 
   async componentDidMount() {
+    throw new Error('Test sentry by giau.tmg');
     try {
       let storedAuthTokens = await LocalStorage.getAuthTokensAsync();
       if (storedAuthTokens) {
