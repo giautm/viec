@@ -14,7 +14,6 @@ let AuthTokenActions = {
   signIn(tokens, profile = {}) {
     ApolloClient.resetStore();
     SentryClient.setUserContext(profile);
-    throw new Error('Test sentry by giau.tmg');
     return AuthTokenActions.setAuthTokens(tokens);
   },
 
