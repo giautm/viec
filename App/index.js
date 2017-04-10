@@ -80,6 +80,7 @@ export class AppContainer extends React.Component {
     } finally {
       this.setState({ isReady: true });
       throw new Error('Test sentry by giau.tmg');
+      console.error(new Error('Test sentry by giau.tmg'));
     }
   }
 
