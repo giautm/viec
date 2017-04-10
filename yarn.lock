@@ -60,6 +60,12 @@
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@expo/react-native-touchable-native-feedback-safe/-/react-native-touchable-native-feedback-safe-1.1.1.tgz#62c8bdbd6e17c807e143e7bff38a390728f00c19"
 
+"@expo/sentry-utils@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@expo/sentry-utils/-/sentry-utils-0.4.0.tgz#c951a3527490248acba54d1ab8f93686ae1a04e5"
+  dependencies:
+    raven-js "^3.12.0"
+
 "@expo/vector-icons@4.0.0", "@expo/vector-icons@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-4.0.0.tgz#df34e226b41c9f231be6d43c3190f5f7e3828773"
@@ -295,7 +301,7 @@ append-transform@^0.4.0:
   dependencies:
     default-require-extensions "^1.0.0"
 
-appr@^1.0.1:
+appr@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/appr/-/appr-1.0.1.tgz#bddc66437ba465d1038472642450fd9a527a7708"
   dependencies:
@@ -3499,7 +3505,7 @@ json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
-json-stringify-safe@~5.0.1:
+json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
@@ -4476,6 +4482,12 @@ range-parser@~1.0.3:
 range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
+
+raven-js@^3.12.0:
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.14.0.tgz#94dda81d975fdc4a42f193db437cf70021d654e0"
+  dependencies:
+    json-stringify-safe "^5.0.1"
 
 raw-body@~2.1.2:
   version "2.1.7"

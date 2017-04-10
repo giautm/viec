@@ -129,13 +129,14 @@ export default class SignInScreen extends React.Component {
         if (result.error) {
           this._handleError(result);
         } else {
+          let profile = await Auth0Api.fetchUserProfileAsync(result.id_token);
 //          this.props.navigator.hideLocalAlert();
           this.props.dispatch(
             AuthTokenActions.signIn({
               refreshToken: result.refresh_token,
               accessToken: result.access_token,
               idToken: result.id_token,
-            })
+            }, profile)
           );
         }
       }

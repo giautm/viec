@@ -6,12 +6,15 @@
 'use strict';
 
 import { action } from 'Flux';
+import SentryClient from '@expo/sentry-utils';
 import LocalStorage from '../Storage/LocalStorage';
 import ApolloClient from '../Api/ApolloClient';
 
 let AuthTokenActions = {
-  signIn(tokens) {
+  signIn(tokens, profile = {}) {
     ApolloClient.resetStore();
+    SentryClient.setUserContext(profile);
+    throw new Error('Test sentry by giau.tmg');
     return AuthTokenActions.setAuthTokens(tokens);
   },
 
@@ -29,6 +32,7 @@ let AuthTokenActions = {
     LocalStorage.removeAuthTokensAsync();
     LocalStorage.clearHistoryAsync();
     ApolloClient.resetStore();
+    SentryClient.setUserContext();
     return null;
   },
 };
