@@ -1,15 +1,16 @@
 {
   "name": "viec",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "devDependencies": {
-    "appr": "^1.0.1",
+    "appr": "1.0.1",
     "jest-expo": "^0.3.0",
     "react-native-scripts": "0.0.26",
     "react-test-renderer": "~15.4.1"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
+    "publish-sentry": "./node_modules/@expo/sentry-utils/scripts/publish-sentry-release",
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
@@ -24,6 +25,7 @@
     "@expo/ex-navigation": "2.9.4",
     "@expo/react-native-action-sheet": "0.3.1",
     "@expo/react-native-touchable-native-feedback-safe": "1.1.1",
+    "@expo/sentry-utils": "0.4.0",
     "@expo/vector-icons": "4.0.0",
     "apollo-client": "1.0.0",
     "expo": "^15.1.0",
