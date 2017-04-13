@@ -9,11 +9,14 @@ import AuthTokenReducer from 'AuthTokenReducer';
 import Flux from 'Flux';
 import ApolloClient from '../Api/ApolloClient';
 
-let reducers = {
+import { router as Router} from '../App/navigator';
+
+const reducers = {
   authTokens: AuthTokenReducer,
   apollo: ApolloClient.reducer(),
+  nav: (state, action) => Router.getStateForAction(action, state) || state,
 };
 
-let store = Flux.createStore(reducers);
+const store = Flux.createStore(reducers);
 
 export default store;
