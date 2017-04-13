@@ -5,8 +5,8 @@
   "devDependencies": {
     "appr": "1.0.1",
     "jest-expo": "^0.3.0",
-    "react-native-scripts": "0.0.26",
-    "react-test-renderer": "~15.4.1"
+    "react-native-scripts": "0.0.27",
+    "react-test-renderer": "~15.5.4"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
@@ -24,10 +24,10 @@
   "dependencies": {
     "@expo/ex-navigation": "2.9.4",
     "@expo/react-native-action-sheet": "0.3.1",
-    "@expo/react-native-touchable-native-feedback-safe": "1.1.1",
+    "@expo/react-native-touchable-native-feedback-safe": "1.1.2",
     "@expo/sentry-utils": "0.4.0",
     "@expo/vector-icons": "4.0.0",
-    "apollo-client": "1.0.0",
+    "apollo-client": "1.0.3",
     "expo": "^15.1.0",
     "graphql-tag": "2.0.0",
     "human-format": "0.8.0",
@@ -36,10 +36,10 @@
     "lodash": "4.17.4",
     "momentjs": "^2.0.0",
     "react": "~15.4.0",
-    "react-apollo": "1.0.0",
+    "react-apollo": "1.0.1",
     "react-native": "0.42.3",
     "react-native-swipe-cards": "0.1.0",
-    "react-redux": "5.0.3",
+    "react-redux": "5.0.4",
     "redux": "3.6.0",
     "redux-actions": "2.0.1",
     "redux-logger": "3.0.1",
