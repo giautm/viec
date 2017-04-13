@@ -7,26 +7,23 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
 import { Font } from 'expo';
-import { NavigationProvider, StackNavigation } from '@expo/ex-navigation';
+import { addNavigationHelpers } from 'react-navigation';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import SentryClient from '@expo/sentry-utils';
-
-import AuthTokenActions from '../Flux/AuthTokenActions';
-import LocalStorage from '../Storage/LocalStorage';
-//import GlobalLoadingOverlay from './containers/GlobalLoadingOverlay';
-
 import moment from 'moment';
+
 const viLocale = require('moment/locale/vi');
 moment.locale('vi', viLocale);
 
 import Store from '../Flux/Store';
+import AuthTokenActions from '../Flux/AuthTokenActions';
+import LocalStorage from '../Storage/LocalStorage';
 import ApolloClient from '../Api/ApolloClient';
-
-import Router from './navigation/Router';
-import customNavigationContext from './navigation/customNavigationContext';
+import AppNavigator from './navigator';
 
 import registerForPushNotificationsAsync from '../Api/registerForPushNotificationsAsync';
 
@@ -51,13 +48,19 @@ export default class WrapWithStore extends React.Component {
   }
 };
 
+@connect((data) => AppContainer.getDataProps(data))
 export class AppContainer extends React.Component {
   state = {
     isReady: false,
   };
 
+  static getDataProps = (data) => {
+    return {
+      nav: data.nav,
+    };
+  };
+
   async componentDidMount() {
-    throw new Error('Test sentry by giau.tmg');
     try {
       let storedAuthTokens = await LocalStorage.getAuthTokensAsync();
       if (storedAuthTokens) {
@@ -95,12 +98,10 @@ export class AppContainer extends React.Component {
       return (
         <View style={styles.container}>
           <ActionSheetProvider>
-            <NavigationProvider context={customNavigationContext}>
-              {this.state.isReady &&
-                <StackNavigation
-                  id="root"
-                  initialRoute="rootNavigation" />}
-            </NavigationProvider>
+            <AppNavigator navigation={addNavigationHelpers({
+              dispatch: this.props.dispatch,
+              state: this.props.nav,
+            })} />
           </ActionSheetProvider>
 
           {/* {Platform.OS === 'ios' && <GlobalLoadingOverlay />} */}
