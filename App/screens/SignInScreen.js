@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-
+import DropdownAlert from 'react-native-dropdownalert';
 import {
   ActionsContainer,
   Button,
@@ -45,6 +45,10 @@ class FormView extends Component {
 
   _handleError = (error) => {
     console.log(error);
+    let message = error.error_description
+      || error.message
+      || 'Sorry, something went wrong.';
+    this.dropdown.alertWithType('error', 'Error', message)
   };
 
   onSignIn = async (values, dispatch) => {
@@ -56,6 +60,7 @@ class FormView extends Component {
           this._handleError(result);
         } else {
           let profile = await Auth0Api.fetchUserProfileAsync(result.access_token);
+          this.dropdown.dismiss();
           dispatch(AuthTokenActions.signIn({
             refreshToken: result.refresh_token,
             accessToken: result.access_token,
@@ -88,6 +93,8 @@ class FormView extends Component {
             submitting={submitting}
             >Đăng nhập</Button>
         </ActionsContainer>
+        <DropdownAlert
+          ref={(ref) => this.dropdown = ref}/>
       </Form>
     );
   }
