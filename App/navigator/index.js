@@ -2,6 +2,7 @@
 import {
   StackNavigator,
   TabNavigator,
+  TabView,
 } from 'react-navigation';
 
 import ProfileScreen from '../screens/ProfileScreen';
@@ -20,9 +21,24 @@ const MainScreenNavigator = TabNavigator({
   employee: {
     screen: EmployeeProfileScreen,
   },
+  qrCode: {
+    screen: QRCodeScreen,
+  },
+  signIn: {
+    screen: SignInScreen,
+  },
+  signUp: {
+    screen: SignUpScreen,
+  },
+}, {
+  tabBarComponent: TabView.TabBarBottom,
+  tabBarPosition: 'bottom',
 });
 
 const SimpleApp = StackNavigator({
+  rootNavigation: {
+    screen: MainScreenNavigator,
+  },
   check: {
     screen: CheckScreen,
   },
@@ -32,14 +48,10 @@ const SimpleApp = StackNavigator({
   signIn: {
     screen: SignInScreen,
   },
-  signUp: {
-    screen: SignUpScreen,
-  },
-  qrCode: {
-    screen: QRCodeScreen,
-  },
-  rootNavigation: {
-    screen: MainScreenNavigator,
+}, {
+  headerMode: 'screen',
+  cardStyle: {
+    backgroundColor: '#fff',
   },
 });
 

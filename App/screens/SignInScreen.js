@@ -1,42 +1,32 @@
-/* @flow */
-
-import React from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Components } from 'expo';
+import React, { Component } from 'react';
+import { View, Text, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 
-import Alerts from '../constants/Alerts';
+import {
+  ActionsContainer,
+  Button,
+  FieldsContainer,
+  Fieldset,
+  Form,
+  FormGroup,
+  Label,
+} from 'react-native-clean-form';
+import {
+  Input,
+  Select,
+  Switch,
+} from 'react-native-clean-form/redux-form-immutable';
+import { reduxForm } from 'redux-form/immutable';
+
 import AuthTokenActions from '../../Flux/AuthTokenActions';
-import Colors from '../constants/Colors';
-import Form from '../components/Form';
-import PrimaryButton from '../components/PrimaryButton';
 import Auth0Api from '../../Api/Auth0Api';
 
-const DEBUG = __DEV__;
-
-@connect(data => SignInScreen.getDataProps(data))
-export default class SignInScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Đăng nhập',
-  };
-
+class FormView extends Component {
   static getDataProps(data) {
     return {
       authTokens: data.authTokens,
     };
   }
-
-  state = DEBUG
-    ? {
-        email: 'testing@getexponent.com',
-        password: 'pass123',
-        isLoading: false,
-      }
-    : {
-        email: '',
-        password: '',
-        isLoading: false,
-      };
 
   componentDidMount() {
     this._isMounted = true;
@@ -46,119 +36,76 @@ export default class SignInScreen extends React.Component {
     this._isMounted = false;
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.authTokens.idToken && !this.props.authTokens.isToken) {
-      TextInput.State.blurTextInput(TextInput.State.currentlyFocusedField());
-//      this.props.navigation.dismissModal();
-    }
-  }
+//   componentWillReceiveProps(nextProps) {
+//     if (nextProps.authTokens.idToken && !this.props.authTokens.isToken) {
+//       TextInput.State.blurTextInput(TextInput.State.currentlyFocusedField());
+// //      this.props.navigation.dismissModal();
+//     }
+//   }
 
-  render() {
-    return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={{ paddingTop: 15 }}
-        keyboardShouldPersistTaps="always"
-        keyboardDismissMode="on-drag">
-        <Form>
-          <Form.Input
-            autoCapitalize="none"
-            autoCorrect={false}
-            autofocus
-            blurOnSubmit={false}
-            keyboardType="email-address"
-            label="E-mail or username"
-            onChangeText={this._handleChangeEmail}
-            onSubmitEditing={this._handleSubmitEmail}
-            returnKeyType="next"
-            value={this.state.email}
-          />
-          <Form.Input
-            hideBottomBorder
-            label="Password"
-            ref={view => {
-              this._passwordInput = view;
-            }}
-            onChangeText={this._handleChangePassword}
-            onSubmitEditing={this._handleSubmitPassword}
-            returnKeyType="done"
-            secureTextEntry
-            value={this.state.password}
-          />
-        </Form>
-
-        <PrimaryButton
-          isLoading={this.state.isLoading}
-          style={{ margin: 20 }}
-          onPress={this._handleSubmit}>
-          Sign In
-        </PrimaryButton>
-      </ScrollView>
-    );
-  }
-
-  _handleSubmitEmail = () => {
-    this._passwordInput.focus();
+  _handleError = (error) => {
+    console.log(error);
   };
 
-  _handleSubmitPassword = () => {
-    this._handleSubmit();
-  };
-
-  _handleChangeEmail = email => {
-    this.setState({ email });
-  };
-
-  _handleChangePassword = password => {
-    this.setState({ password });
-  };
-
-  _handleSubmit = async () => {
-    let { email, password, isLoading } = this.state;
-
-    if (isLoading) {
-      return;
-    }
-
-    this.setState({ isLoading: true });
-
+  onSignIn = async (values, dispatch) => {
     try {
-      let result = await Auth0Api.signInAsync(email, password);
-
+      let result = await Auth0Api.signInAsync(
+        values.get('email'), values.get('password'));
       if (this._isMounted) {
         if (result.error) {
           this._handleError(result);
         } else {
-          let profile = await Auth0Api.fetchUserProfileAsync(result.id_token);
-//          this.props.navigator.hideLocalAlert();
-          this.props.dispatch(
-            AuthTokenActions.signIn({
-              refreshToken: result.refresh_token,
-              accessToken: result.access_token,
-              idToken: result.id_token,
-            }, profile)
-          );
+          let profile = await Auth0Api.fetchUserProfileAsync(result.access_token);
+          dispatch(AuthTokenActions.signIn({
+            refreshToken: result.refresh_token,
+            accessToken: result.access_token,
+            idToken: result.id_token,
+          }, profile));
         }
       }
     } catch (e) {
+      console.log(e);
       this._isMounted && this._handleError(e);
-    } finally {
-      this._isMounted && this.setState({ isLoading: false });
     }
   };
 
-  _handleError = error => {
-    console.log({ error });
-    let message = error.error_description ||
-      error.message ||
-      'Sorry, something went wrong.';
-//    this.props.navigator.showLocalAlert(message, Alerts.error);
-  };
+  render() {
+    const { handleSubmit, submitting } = this.props
+
+    return (
+      <Form>
+        <FieldsContainer>
+          <Fieldset label={'Đăng nhập vào Việc'} last>
+            <Input name="email" label="Địa chỉ email" placeholder="email@example.com" keyboardType="email-address" returnKeyType="next" blurOnSubmit={false} />
+            <Input name="password" label="Mật khẩu" placeholder="password" secureTextEntry/>
+          </Fieldset>
+        </FieldsContainer>
+        <ActionsContainer>
+          <Button
+            icon="md-checkmark"
+            iconPlacement="right"
+            onPress={handleSubmit(this.onSignIn)}
+            submitting={submitting}
+            >Đăng nhập</Button>
+        </ActionsContainer>
+      </Form>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.greyBackground,
-  },
-});
+export default connect((data) => FormView.getDataProps(data))
+(reduxForm({
+  form: 'signIn',
+  validate: (values) => {
+    const errors = {};
+
+    if (!values.get('email')) {
+      errors.email = 'Tên đăng nhập là bắt buộc.'
+    }
+    if (!values.get('password')) {
+      errors.password = 'Mật khẩu là bắt buộc.'
+    }
+
+    return errors
+  }
+})(FormView));

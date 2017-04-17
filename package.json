@@ -38,12 +38,16 @@
     "react": "~15.4.0",
     "react-apollo": "1.0.1",
     "react-native": "0.42.3",
+    "react-native-clean-form": "https://github.com/giautm/react-native-clean-form.git",
     "react-native-swipe-cards": "0.1.0",
     "react-navigation": "1.0.0-beta.7",
     "react-redux": "5.0.4",
     "redux": "3.6.0",
     "redux-actions": "2.0.1",
+    "redux-form": "6.6.3",
+    "redux-immutablejs": "0.0.8",
     "redux-logger": "3.0.1",
-    "redux-promise": "0.5.3"
+    "redux-promise": "0.5.3",
+    "styled-components": "1.4.5"
   }
 }

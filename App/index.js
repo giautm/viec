@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
-import { Font } from 'expo';
+import { Font, Constants } from 'expo';
 import { addNavigationHelpers } from 'react-navigation';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import SentryClient from '@expo/sentry-utils';
+import { ThemeProvider } from 'styled-components';
 import moment from 'moment';
-
 const viLocale = require('moment/locale/vi');
 moment.locale('vi', viLocale);
 
@@ -45,6 +45,56 @@ export default class WrapWithStore extends React.Component {
         <AppContainer/>
       </ApolloProvider>
     );
+  }
+};
+
+const theme = {
+  Button: {
+    backgroundColor: '#4286dd',
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 700,
+    height: 45,
+  },
+  ErrorMessage: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 15,
+    textAlign: 'right',
+  },
+  Fieldset: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    labelColor: '#909090',
+    labelSize: 14,
+    labelWeight: 700,
+    labelHeight: 25,
+    padding: '12 8',
+  },
+  FormGroup: {
+    borderColor: '#ebebeb',
+    borderRadius: 3,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    errorBorderColor: 'red',
+    height: 35,
+    marginBottom: 10,
+    padding: '0 10',
+  },
+  BaseInput: {
+    placeholderColor: '#c9c9c9',
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  Input: {
+    color: '#313131',
+  },
+  Label: {
+    color: '#bfc2c9',
+    fontSize: 14,
+    stackedHeight: 40,
+  },
+  Select: {
   }
 };
 
@@ -97,11 +147,16 @@ export class AppContainer extends React.Component {
     if (this.state.isReady) {
       return (
         <View style={styles.container}>
+          {Platform.OS === 'android' && <View style={{height: Constants.statusBarHeight}}/>}
           <ActionSheetProvider>
-            <AppNavigator navigation={addNavigationHelpers({
-              dispatch: this.props.dispatch,
-              state: this.props.nav,
-            })} />
+            <ThemeProvider theme={theme}>
+              <AppNavigator
+                navigation={addNavigationHelpers({
+                  dispatch: this.props.dispatch,
+                  state: this.props.nav,
+                })}
+              />
+            </ThemeProvider>
           </ActionSheetProvider>
 
           {/* {Platform.OS === 'ios' && <GlobalLoadingOverlay />} */}
@@ -126,7 +181,7 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
