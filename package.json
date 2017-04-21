@@ -36,7 +36,7 @@
     "lodash": "4.17.4",
     "momentjs": "^2.0.0",
     "react": "~15.4.0",
-    "react-apollo": "1.0.1",
+    "react-apollo": "1.1.0",
     "react-native": "0.42.3",
     "react-native-swipe-cards": "0.1.0",
     "react-redux": "5.0.4",
