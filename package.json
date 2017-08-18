@@ -28,7 +28,7 @@
     "@expo/sentry-utils": "0.4.0",
     "@expo/vector-icons": "4.0.0",
     "apollo-client": "1.0.3",
-    "expo": "^15.1.0",
+    "expo": "^20.0.0",
     "graphql-tag": "2.0.0",
     "human-format": "0.8.0",
     "immutable": "3.8.1",
