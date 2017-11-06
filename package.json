@@ -27,7 +27,7 @@
     "@expo/react-native-touchable-native-feedback-safe": "1.1.2",
     "@expo/sentry-utils": "0.4.0",
     "@expo/vector-icons": "4.0.0",
-    "apollo-client": "1.0.3",
+    "apollo-client": "2.0.2",
     "expo": "^15.1.0",
     "graphql-tag": "2.0.0",
     "human-format": "0.8.0",
